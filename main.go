@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"example-project.com/event-app/config"
+	"example-project.com/event-app/controllers"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -21,8 +22,8 @@ func main() {
 	// Route
 	api := server.Group("/api")
 	{
-		api.GET("/events")
-		api.POST("/event")
+		api.GET("/events", controllers.GetEvents)
+		api.POST("/event", controllers.CreateEvent)
 	}
 
 	server.Run(":8080")
