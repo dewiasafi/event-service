@@ -29,5 +29,11 @@ func main() {
 		api.DELETE("/event/:id", controllers.DeleteEvent)
 	}
 
+	auth := api.Group("/auth")
+	{
+		auth.POST("/register", controllers.RegisterUser)
+		auth.POST("/login", controllers.LoginUser)
+	}
+
 	server.Run(":8080")
 }
