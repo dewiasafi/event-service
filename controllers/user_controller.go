@@ -128,3 +128,27 @@ func LoginUser(ctx *gin.Context) {
 	})
 
 }
+
+func GetUserLogin(ctx *gin.Context) {
+	userId, exits := ctx.Get("userId")
+	if !exits {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Unauthorized",
+		})
+		return
+	}
+
+	var user models.User
+	userData := config.DB.Select("id", "name", "email").First(&user, userId).Error
+	if userData != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"error": "User not found",
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "fetch successfully",
+		"data":    user,
+	})
+}
