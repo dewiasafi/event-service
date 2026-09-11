@@ -8,6 +8,7 @@ import (
 	"example-project.com/event-app/config"
 	"example-project.com/event-app/controllers"
 	"example-project.com/event-app/middleware"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -15,13 +16,13 @@ import (
 func main() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Println("Error loading .env file")
 	}
 
 	config.ConnectDB()
 
 	server := gin.Default()
-
+	server.Use(cors.Default())
 	// Route
 	api := server.Group("/api")
 	auth := api.Group("/auth")
